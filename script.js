@@ -2,10 +2,14 @@ function main() {
   window.addEventListener("deviceorientation", onOrientationChange);
 
   navigator.mediaDevices
-    .getUserMedia({ video: true })
+    .getUserMedia({
+      video: {
+        facingMode: "environment",
+      },
+    })
     .then(function (signal) {
       const video = document.getElementById("myVideo");
-      video.srcOject = signal;
+      video.srcObject = signal;
       video.play();
     })
     .catch(function (err) {

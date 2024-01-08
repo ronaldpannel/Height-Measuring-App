@@ -4,7 +4,8 @@ function main() {
   navigator.mediaDevices
     .getUserMedia({
       video: {
-        facingMode: "environment",
+        facingMode: { ideal: "environment" },
+        // You can add additional constraints if needed
       },
     })
     .then(function (signal) {
@@ -13,8 +14,27 @@ function main() {
       video.play();
     })
     .catch(function (err) {
-      alert(err);
+      // Check if the error is related to constraints and provide a more informative message
+      if (err.name === "NotAllowedError" || err.name === "NotFoundError") {
+        alert(
+          "Please enable camera access or ensure that your device has a rear camera available."
+        );
+      } else {
+        alert("Error accessing camera: " + err.message);
+      }
     });
+
+  // navigator.mediaDevices.getUserMedia({video:{
+  //   facingMode: 'environment'
+  // }})
+  //   .then(function (signal){
+  //     const video = document.getElementById("myVideo");
+  //     video.srcObject=signal;
+  //     video.play();
+  //   })
+  //   .catch(function (err) {
+  //     alert(err);
+  //   });
 }
 
 function onOrientationChange(event) {
